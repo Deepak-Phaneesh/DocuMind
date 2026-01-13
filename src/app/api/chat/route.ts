@@ -9,7 +9,19 @@ export const maxDuration = 30;
 // Force dynamic rendering - don't try to pre-render at build time
 export const dynamic = 'force-dynamic';
 
-const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
+// Lazy initialization - Groq client is only created when needed
+let _groqClient: Groq | null = null;
+const getGroqClient = (): Groq => {
+    if (!_groqClient) {
+        const apiKey = process.env.GROQ_API_KEY;
+        if (!apiKey) {
+            throw new Error('GROQ_API_KEY environment variable is required');
+        }
+        _groqClient = new Groq({ apiKey });
+    }
+    return _groqClient;
+};
+
 const USE_OPENAI = process.env.CHAT_PROVIDER === 'openai';
 
 export async function POST(req: NextRequest) {
@@ -70,7 +82,7 @@ ${context}`;
                 }))
             ];
 
-            const completion = await groq.chat.completions.create({
+            const completion = await getGroqClient().chat.completions.create({
                 model: 'llama-3.3-70b-versatile', // Fast and high quality
                 messages: chatMessages,
                 temperature: 0.7,
