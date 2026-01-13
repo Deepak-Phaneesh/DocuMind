@@ -9,6 +9,9 @@ import { LogoutButton } from '@/components/LogoutButton';
 import { motion, AnimatePresence } from 'framer-motion';
 import { User } from 'lucide-react';
 
+// Force dynamic rendering - prevent static generation at build time
+export const dynamic = 'force-dynamic';
+
 export default function Home() {
     const [fileInfo, setFileInfo] = useState<{ id: string; name: string } | null>(null);
     const [user, setUser] = useState<any>(null);
