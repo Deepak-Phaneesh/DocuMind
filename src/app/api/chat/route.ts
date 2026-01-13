@@ -6,6 +6,8 @@ import { supabaseAdmin } from '@/lib/supabase';
 import { generateEmbedding } from '@/lib/vector-store';
 
 export const maxDuration = 30;
+// Force dynamic rendering - don't try to pre-render at build time
+export const dynamic = 'force-dynamic';
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 const USE_OPENAI = process.env.CHAT_PROVIDER === 'openai';

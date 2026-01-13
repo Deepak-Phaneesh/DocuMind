@@ -1,5 +1,8 @@
 import Groq from 'groq-sdk';
 
+// Force dynamic rendering - don't try to pre-render at build time
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
     try {
         const apiKey = process.env.GROQ_API_KEY;

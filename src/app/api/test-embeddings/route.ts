@@ -1,5 +1,8 @@
 import { generateHuggingFaceEmbedding, generateMockEmbedding } from '@/lib/embeddings-hf';
 
+// Force dynamic rendering - don't try to pre-render at build time
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
     try {
         console.log('Testing Hugging Face embedding...');

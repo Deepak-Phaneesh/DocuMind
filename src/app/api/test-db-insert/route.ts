@@ -1,6 +1,9 @@
 import { supabaseAdmin } from '@/lib/supabase';
 import { generateEmbedding } from '@/lib/vector-store';
 
+// Force dynamic rendering - don't try to pre-render at build time
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
     try {
         // Generate a test embedding

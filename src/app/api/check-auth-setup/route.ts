@@ -1,5 +1,8 @@
 import { supabaseAdmin } from '@/lib/supabase';
 
+// Force dynamic rendering - don't try to pre-render at build time
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
     try {
         // Test 1: Check if user_id column exists

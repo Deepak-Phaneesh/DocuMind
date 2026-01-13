@@ -1,5 +1,14 @@
 {
-  "/page": "app/page.js",
+  "/_not-found/page": "app/_not-found/page.js",
   "/login/page": "app/login/page.js",
-  "/signup/page": "app/signup/page.js"
+  "/page": "app/page.js",
+  "/signup/page": "app/signup/page.js",
+  "/api/check-auth-setup/route": "app/api/check-auth-setup/route.js",
+  "/api/test-db-insert/route": "app/api/test-db-insert/route.js",
+  "/api/chat/route": "app/api/chat/route.js",
+  "/api/check-schema/route": "app/api/check-schema/route.js",
+  "/api/test-embeddings/route": "app/api/test-embeddings/route.js",
+  "/api/test-db/route": "app/api/test-db/route.js",
+  "/api/test-groq/route": "app/api/test-groq/route.js",
+  "/api/upload/route": "app/api/upload/route.js"
 }

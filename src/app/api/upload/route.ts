@@ -4,6 +4,9 @@ import { cookies } from 'next/headers';
 import { parsePDF, chunkText } from '@/lib/pdf-loader';
 import { storeDocuments } from '@/lib/vector-store';
 
+// Force dynamic rendering - don't try to pre-render at build time
+export const dynamic = 'force-dynamic';
+
 export async function POST(req: NextRequest) {
     try {
         // Check authentication
