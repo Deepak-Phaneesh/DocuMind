@@ -161,7 +161,7 @@ export function AuthForm({ mode }: AuthFormProps) {
             <div className="text-center text-sm text-zinc-400">
                 {mode === 'login' ? (
                     <p>
-                        Don't have an account?{' '}
+                        Don&apos;t have an account?{' '}
                         <a href="/signup" className="text-blue-400 hover:text-blue-300 font-medium">
                             Sign up
                         </a>

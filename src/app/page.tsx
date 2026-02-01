@@ -20,16 +20,46 @@ export default function Home() {
     const supabase = createClient();
 
     useEffect(() => {
+        let mounted = true;
+
         const checkAuth = async () => {
-            const { data: { user } } = await supabase.auth.getUser();
+            try {
+                // Add a timeout to prevent infinite loading
+                const timeoutPromise = new Promise((_, reject) =>
+                    setTimeout(() => reject(new Error('Auth check timed out')), 10000)
+                );
 
-            if (!user) {
-                router.push('/login');
-                return;
+                const authPromise = supabase.auth.getUser();
+
+                // Race the auth check against the timeout
+                const { data, error } = await Promise.race([
+                    authPromise,
+                    timeoutPromise
+                ]) as any;
+
+                if (!mounted) return;
+
+                if (error) {
+                    console.error('Auth error:', error);
+                    // If we have an error (like "Auth session missing!"), redirect to login
+                    router.push('/login');
+                    return;
+                }
+
+                if (!data?.user) {
+                    console.log('No user found, redirecting to login');
+                    router.push('/login');
+                    return;
+                }
+
+                setUser(data.user);
+            } catch (err) {
+                console.error('Auth check failed:', err);
+                // On critical failure, fallback to login
+                if (mounted) router.push('/login');
+            } finally {
+                if (mounted) setLoading(false);
             }
-
-            setUser(user);
-            setLoading(false);
         };
 
         checkAuth();
@@ -40,16 +70,23 @@ export default function Home() {
                 router.push('/login');
             } else {
                 setUser(session.user);
+                setLoading(false);
             }
         });
 
-        return () => subscription.unsubscribe();
+        return () => {
+            mounted = false;
+            subscription.unsubscribe();
+        };
     }, [router, supabase]);
 
     if (loading) {
         return (
             <main className="flex min-h-screen items-center justify-center bg-gradient-to-b from-zinc-950 to-black">
-                <div className="text-zinc-400">Loading...</div>
+                <div className="flex flex-col items-center gap-4">
+                    <div className="w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full animate-spin" />
+                    <div className="text-zinc-400">Loading DocuMind...</div>
+                </div>
             </main>
         );
     }
