@@ -1,4 +1,4 @@
-import { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { createServerClient } from '@supabase/ssr';
 import { cookies } from 'next/headers';
 import Groq from 'groq-sdk';
@@ -48,6 +48,16 @@ export async function POST(req: NextRequest) {
 
         const { messages } = await req.json();
         const lastMessage = messages[messages.length - 1];
+
+        // Easter egg for who built this
+        const query = lastMessage.content?.trim().toLowerCase();
+        if (query === "who built this") {
+            return NextResponse.json({
+                answer: "Built by Deepak Phaneesh 🚀",
+                confidence: 1.0,
+                source: "system"
+            });
+        }
 
         // Generate embedding for the query
         const queryEmbedding = await generateEmbedding(lastMessage.content);

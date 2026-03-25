@@ -11,11 +11,23 @@ A powerful **Retrieval-Augmented Generation (RAG)** application that allows you 
 - 💰 **100% Free**: Uses free tier services (Hugging Face, Groq API, Supabase)
 - 🎨 **Modern UI**: Beautiful, responsive interface with animations
 
+## 🏗 Architecture
+
+Frontend (Next.js)
+↓
+API Layer
+↓
+Embedding + Vector DB
+↓
+Retriever
+↓
+LLM (Answer generation)
+
 ## 🛠️ Technology Stack
 
 - **Frontend**: Next.js 14, React 18, TypeScript
 - **Styling**: Tailwind CSS, Framer Motion
-- **AI & Embeddings**: 
+- **AI & Embeddings**:
   - Hugging Face (384-dimension embeddings)
   - Groq SDK (streaming chat responses)
 - **Database**: Supabase (vector storage with pgvector)
@@ -127,11 +139,13 @@ PDF-analyser/
 The application supports multiple providers for embeddings and chat:
 
 ### Embedding Providers
+
 - `huggingface` - Free, 384 dimensions
 - `openai` - Paid, 1536 dimensions
 - `mock` - Testing only
 
 ### Chat Providers
+
 - `groq` - Free, streaming responses
 - `openai` - Paid
 
@@ -141,29 +155,32 @@ Update `EMBEDDING_PROVIDER` and `CHAT_PROVIDER` in `.env.local` to switch provid
 
 ## 📊 Features Comparison
 
-| Feature | Status |
-|---------|--------|
-| PDF Upload | ✅ Working |
-| Text Extraction | ✅ Working |
-| Vector Embeddings | ✅ Hugging Face (Free) |
-| Semantic Search | ✅ Supabase pgvector |
-| AI Chat | ✅ Groq SDK (Free) |
-| Streaming Responses | ✅ Real-time |
-| File Management | ✅ Display filename |
+| Feature             | Status                 |
+| ------------------- | ---------------------- |
+| PDF Upload          | ✅ Working             |
+| Text Extraction     | ✅ Working             |
+| Vector Embeddings   | ✅ Hugging Face (Free) |
+| Semantic Search     | ✅ Supabase pgvector   |
+| AI Chat             | ✅ Groq SDK (Free)     |
+| Streaming Responses | ✅ Real-time           |
+| File Management     | ✅ Display filename    |
 
 ## 🐛 Troubleshooting
 
 ### PDF Upload Fails
+
 - Check that your Hugging Face API key is valid
 - Ensure the Supabase database schema is correctly set up (384 dimensions)
 - Verify that the `documents` table exists in Supabase
 
 ### Chat Not Working
+
 - Verify your Groq API key is set in `.env.local`
 - Check the browser console for error messages
 - Ensure you've uploaded a PDF first
 
 ### Database Schema Mismatch
+
 - Run the migration script in `supabase/migrations/init.sql`
 - Make sure the vector dimension is set to 384 for Hugging Face
 
